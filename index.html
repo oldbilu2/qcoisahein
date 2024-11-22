@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia Dos Namorados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url(https://i.pinimg.com/originals/c1/2e/19/c12e191aa9bd00045929b50bd932b571.gif);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        .painel {
+            background: rgba(119, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .painel h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .painel img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px 0;
+        }
+
+        .painel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        #sim {
+            background: rgba(50, 205, 50, 0.3);
+        }
+
+        #sim:hover {
+            background: #32cd32;
+        }
+
+        #nao {
+            background: rgba(255, 69, 0, 0.3);
+        }
+
+        #nao:hover {
+            background: #ff4500;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 0.8);
+            position: fixed;
+            bottom: 0;
+        }
+
+        /* Tela de resposta triste */
+        .resposta-triste {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .resposta-triste h2 {
+            font-size: 2rem;
+        }
+
+        .resposta-triste p {
+            font-size: 1.5rem;
+        }
+
+        .close {
+            background: red;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Animação do mouse */
+        .mouse {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            z-index: 1000;
+        }
+
+        /* Animação de mouse se movendo até o botão */
+        @keyframes moveMouse {
+            0% {
+                left: 100%;
+                top: 50%;
+            }
+            100% {
+                left: 75%;
+                top: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="painel">
+        <h1>Para my angel sempre</h1>
+        <img src="https://gifman.net/wp-content/uploads/2019/06/ursinho-fofo-apaixonado.gif" alt="Imagem fofinha">
+        <h2>Aceita namorar comigo?</h2>
+
+        <audio id="audio" loop>
+            <source src="/audio/POV _ _you have no enemies_ _   [ playlist ]   _ SLOWED.mp3" type="audio/mp3">
+            Seu navegador não suporta o elemento audio.
+        </audio>
+
+        <div class="botoes">
+            <button id="sim" onclick="window.location.href='video_page.html'">Sim!</button>
+            <button id="nao" onclick="mostrarResposta()">Não!</button>
+        </div>
+    </div>
+
+    <div class="resposta-triste" id="resposta-triste">
+        <h2 id="mensagem"></h2>
+        <p id="pMensagem">Affe... por que não? Não posso desistir assim!</p>
+        <button class="close" onclick="fecharResposta()">Fechar</button>
+    </div>
+
+    <footer>
+        Feito com 💜 por Bilu
+    </footer>
+
+    <script>
+        let cliquesNao = 0;
+        let audio = document.getElementById("audio");
+
+        // Inicia a música ao clicar em qualquer lugar na página
+        window.addEventListener("click", function() {
+            audio.play(); // Inicia a música
+        });
+
+        function mostrarResposta() {
+            var resposta = document.getElementById("resposta-triste");
+            var mensagem = document.getElementById("mensagem");
+            var pMensagem = document.getElementById("pMensagem");
+
+            resposta.style.display = "block";
+            cliquesNao++;
+
+            // Altera as mensagens de acordo com o número de cliques
+            if (cliquesNao === 1) {
+                pMensagem.innerText = "Affe... por que não?";
+            } else if (cliquesNao === 2) {
+                pMensagem.innerText = "Você realmente não quer?";
+            } else if (cliquesNao === 3) {
+                pMensagem.innerText = "Tá bom, entendi... é isso.";
+            } else if (cliquesNao === 4) {
+                mensagem.innerText = "Você não me dá escolha!";
+                pMensagem.innerText = "";
+
+                // Animação de mouse saindo da tela e indo até o botão SIM
+                var mouse = document.createElement('div');
+                mouse.classList.add('mouse');
+                document.body.appendChild(mouse);
+
+                // Posição do botão SIM
+                var simButton = document.getElementById('sim');
+                var simButtonRect = simButton.getBoundingClientRect();
+                var mouseRect = mouse.getBoundingClientRect();
+
+                var mouseStartX = window.innerWidth;
+                var mouseStartY = window.innerHeight / 2;
+
+                var mouseEndX = simButtonRect.left + (simButtonRect.width / 2) - (mouseRect.width / 2);
+                var mouseEndY = simButtonRect.top + (simButtonRect.height / 2) - (mouseRect.height / 2);
+
+                var duration = 4; // Tempo da animação em segundos
+                var fps = 60;
+                var frames = duration * fps;
+
+                var interval = setInterval(function() {
+                    var stepX = (mouseEndX - mouseStartX) / frames;
+                    var stepY = (mouseEndY - mouseStartY) / frames;
+
+                    mouseStartX += stepX;
+                    mouseStartY += stepY;
+
+                    mouse.style.left = mouseStartX + 'px';
+                    mouse.style.top = mouseStartY + 'px';
+
+                    frames--;
+
+                    if (frames <= 0) {
+                        clearInterval(interval);
+                        simButton.click();
+                    }
+                }, 1000 / fps);
+            }
+        }
+
+        function fecharResposta() {
+            var resposta = document.getElementById("resposta-triste");
+            resposta.style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
